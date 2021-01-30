@@ -1,15 +1,35 @@
 'use strict';
 
-// Напиши функцию countProps(obj), считающую кол-во свойств в объекте. Функция возвращает число - количество свойств.
+// Исправь ошибки которые будут в консоли, чтобы скрипт заработал.
 
-const countProps = function(obj) {
-  return Object.entries(obj).length;
+const inventory = {
+  items: ['Knife', 'Gas mask'],
+
+  add(itemName) {
+    console.log(`Adding ${itemName} to inventory`);
+
+    this.items.push(inventory.items);
+  },
+
+  remove(itemName) {
+    console.log(`Removing ${itemName} from inventory`);
+    this.items = this.items.filter(item => item !== itemName);
+  }
 };
-/*
- * Вызовы функции для проверки работоспособности твоей реализации.
- */
-console.log(countProps({})); // 0
 
-console.log(countProps({ name: 'Mango', age: 2 })); // 2
+const invokeInventoryAction = function(itemName, action) {
+  console.log(`Invoking action on ${itemName}`);
+  action(itemName);
+};
 
-console.log(countProps({ mail: 'poly@mail.com', isOnline: true, score: 500 })); // 3
+invokeInventoryAction('Medkit', inventory.add.bind(inventory));
+// Invoking action on Medkit
+// Adding Medkit to inventory
+
+console.log(inventory.items); // ['Knife', 'Gas mask', 'Medkit']
+
+invokeInventoryAction('Gas mask', inventory.remove.bind(inventory));
+// Invoking action on Gas mask
+// Removing Gas mask from inventory
+
+console.log(inventory.items); // ['Knife', 'Medkit']
